@@ -3,6 +3,8 @@
 
 엄랭과 같은 brainf*ck언어들에서 영감을 얻었습니다.
 
+![image](https://github.com/printSANO/joonLang/assets/83595905/ea84aad1-16e0-4333-9914-68f4cb877b76)
+"하시면 어떻게든 됩니다." 를 언어 모토로 삼고 있습니다.
 
 # 참고 어록
 ### 명대사
