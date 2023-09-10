@@ -5,35 +5,42 @@ def validate_joon_code(lines):
         return False
     
     start_marker = "하시면 어떻게든 됩니다."
-    end_marker = "그것이 팀준이니까."
+    end_marker = "부트캠프 멘토 그만해야지."
     
-    if lines[0].strip() != start_marker or lines[-1].strip() != end_marker:
-        return False
+    if lines[0].strip() != start_marker:
+        return False, start_marker
+    if lines[-1].strip() != end_marker:
+        return False, end_marker
     
-    return True
+    return True, None
 
 def read_joon_file(filename):
     start_marker = "하시면 어떻게든 됩니다."
-    end_marker = "그것이 팀준이니까."
+    end_marker = "부트캠프 멘토 그만해야지."
     try:
         with open(filename, 'r') as joon_file:
             lines = joon_file.readlines()
-            if validate_joon_code(lines):
+            val, message = validate_joon_code(lines)
+            if val:
                 for line in lines:
                     l = line.strip()
                     if l != start_marker and l != end_marker and l != '':
-                        print(l)  # Print each line, removing leading/trailing whitespace
+                        print(l)
             else:
-                print("Error: The code block does not start with '하시면 어떻게든 됩니다.' or end with '그것이 팀준이니까.'")
+                if message == start_marker:
+                    print("에러: 어떻게 하셔도 안되네요?")
+                elif message == end_marker:
+                    print("에러: 부트캠프 멘토 계속 해야겠네....")
+
     except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
+        print(f"에러: 안타깝네요 '{filename}'가 없네요.")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python joon_interpreter.py <filename.joon>")
+        print("저는 강요 안 해요 ~ 파일 어딨습니까?")
     else:
         filename = sys.argv[1]
         if filename.endswith(".joon"):
             read_joon_file(filename)
         else:
-            print("Error: The file should have a '.joon' extension.")
+            print("에러: 그래서 내가 쓴 글 읽었니? .joon 어디있나요?")
