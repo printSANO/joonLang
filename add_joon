@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if the script is not already executable, and if not, make it executable
+if [[ ! -x "joon" ]]; then
+    chmod +x "joon"
+    # Now it's executable, so you can proceed to the main script logic
+fi
+
+if [ "$1" = "remove" ]; then
+    if rm /usr/local/bin/joon; then
+        echo "Joon removed"
+    fi
+    
+else    
+    # Attempt to create a symbolic link to this script in a directory already in your PATH
+    if ln -s "$(readlink -f "joon")" /usr/local/bin/joon 2>/dev/null; then
+        echo "Symbolic link 'joon' created in /usr/local/bin."
+    else
+        echo "Failed to create symbolic link. Permission denied."
+    fi
+fi

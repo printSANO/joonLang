@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Set the path to the Python script within the "joonlang-python" directory
+SCRIPT_PATH="joonlang-python/__main__.py"
+
+# Check if a filename argument was provided
+if [ $# -ne 1 ]; then
+    python3 "$SCRIPT_PATH"
+else
+    # Get the filename from the command line argument
+    filename="$1"
+
+    if [ "$1" = "remove" ]; then
+        if sudo rm /usr/local/bin/joon; then
+            echo "joon removed"
+        fi
+    else
+        # Execute the Python script with the filename argument
+        python3 "$SCRIPT_PATH" "$filename"
+    fi
+fi
