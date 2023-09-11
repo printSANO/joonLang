@@ -40,29 +40,87 @@ class Joon:
         
         return True, None
     
-    # calculate values from 네?, 에?, and 워터밤
+    # calculate values from 네?, 에?, and 워터밤 with variables
     def calculate_val(self, line) -> int:
-        pass
+        vals = line.split(" ")
+        for i in range(len(vals)):
+            v = vals[i].replace("님", '')
+            # print(v)
+            if "네?" in v or "에?" in v:
+                n = v.count("네")
+                e = v.count('에')
+                total = n - e
+                if total < 0:
+                    total = str(total)
+                else:
+                    total = "+" + str(total)
+                vals[i] = total
+            elif v in self.data:
+                vals[i] = str(self.data[v])
+            elif v == "워터밤":
+                vals[i] = "*"
+        string_exec = ""
+        for s in vals:
+            string_exec += s
+        return eval(string_exec)
+    
+    def calculate_output(self, line):
+        vars = line.split(' ')
+        return_string = ""
+        for i in range(len(vars)):
+            v = vars[i]
+            if "님맥사세요" in v:
+                v = v.replace("님맥사세요", '')
+                if "!" in v:
+                    v = v.replace("!", '')
+                if v in self.data:
+                    v = self.data[v]
+                    if vars[i].endswith('!'):
+                        v = chr(v)
+                    return_string += str(v)
+                elif "네?" in v or "에?" in v:
+                    n = v.count("네")
+                    e = v.count('에')
+                    total = n - e
+                    return_string += str(total)
+            elif v == "선택은자유입니다":
+                    return_string += ' '
+        return return_string
 
-    def check_type(self, line) -> str:
+    def check_type(self, line) -> None:
         if "님이말씀해보세요" in line:
-            pass
+            self.parse_var(line)
         elif "님?" in line:
-            pass
+            self.parse_assign(line)
         elif "자러가시는거에요" in line:
-            pass
+            self.parse_loop(line)
         elif "님맥사세요" in line:
-            pass
+            self.parse_output(line)
         elif "그냥여쭤^^보는거에요" in line:
-            pass
+            self.parse_condition(line)
     
     # 님이말씀해보세요
     def parse_var(self, line):
-        pass
+        var = line.split("님이말씀해보세요")
+        if var[0] == '':
+            raise Exception("안타깝네요. 변수 어디갔습니까?")
+        elif var[1] != '':
+            raise Exception("차고로 와. 말씀 뒤에 추가적으로 허용안합니다.")
+        elif var[0] in self.operators:
+            raise Exception("너도 데앤할래? 변수와 연산자가 같을수 없어요.")
+        self.data[var[0]] = 0
 
     # 님?
     def parse_assign(self, line):
-        pass
+        var = line.split("님? ")
+        if var[0] == '':
+            raise Exception("안타깝네요. 변수 어디갔습니까?")
+        if var[0] not in  self.data:
+            raise Exception("안타깝네요. 변수 선언 어디갔습니까?")
+        elif var[0] in self.operators:
+            raise Exception("너도 데앤할래? 변수와 연산자가 같을수 없어요.")
+        val = self.calculate_val(var[1])
+        self.data[var[0]] += val
 
     # 자러가시는거에요
     def parse_loop(self, line):
@@ -70,7 +128,8 @@ class Joon:
 
     # 님맥사세요
     def parse_output(self, line):
-        pass
+        output = self.calculate_output(line)
+        print(output)
 
     # 그냥여쭤^^보는거에요
     def parse_condition(self, line):
