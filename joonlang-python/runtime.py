@@ -4,7 +4,7 @@ class Joon:
     def __init__(self) -> None:
         self.data = {}
         self.start_marker = "하시면 어떻게든 됩니다."
-        self.end_marker = "부트캠프 멘토 그만해야지."
+        self.end_marker = "끝내는 것도 자유입니다."
         self.operators = ["네?", "에?", "워터밤"]
     
     def read_joon_file(self, filename) -> None:
@@ -21,7 +21,7 @@ class Joon:
                     if message == self.start_marker:
                         print("에러: 어떻게 하셔도 안되네요?")
                     elif message == self.end_marker:
-                        print("에러: 부트캠프 멘토 계속 해야겠네....")
+                        print("에러: 진짜 끝내버렸네....")
 
         except FileNotFoundError:
             print(f"에러: 안타깝네요 '{filename}'가 없네요.")
@@ -31,7 +31,7 @@ class Joon:
             return False, "여러분 그럴 시간에 코드 한 줄 더 쓰세요."
         
         start_marker = "하시면 어떻게든 됩니다."
-        end_marker = "부트캠프 멘토 그만해야지."
+        end_marker = "끝내는 것도 자유입니다."
         
         if lines[0].strip() != start_marker:
             return False, start_marker
@@ -62,8 +62,12 @@ class Joon:
         string_exec = ""
         for s in vals:
             string_exec += s
-        return eval(string_exec)
-    
+        try:
+            num = eval(string_exec)
+            return num
+        except:
+            raise Exception("안타깝네요. 문법 공부 더하고 오세요.")
+
     def calculate_output(self, line):
         vars = line.split(' ')
         return_string = ""
