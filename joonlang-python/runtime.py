@@ -6,17 +6,22 @@ class Joon:
         self.start_marker = "하시면 어떻게든 됩니다."
         self.end_marker = "끝내는 것도 자유입니다."
         self.operators = ["네?", "에?", "워터밤"]
+        self.line = 0
+        self.lines = []
     
     def read_joon_file(self, filename) -> None:
         try:
             with open(filename, 'r', encoding="UTF-8") as joon_file:
                 lines = joon_file.readlines()
+                self.lines = lines
                 val, message = self.validate_joon_code(lines)
                 if val:
-                    for line in lines:
+                    while self.line < len(lines):
+                        line = lines[self.line]
                         l = line.strip()
                         if l != self.start_marker and l != self.end_marker and l != '' and not l.startswith('#'):
                             self.check_type(l)
+                        self.line += 1
                 else:
                     if message == self.start_marker:
                         print("에러: 어떻게 하셔도 안되네요?")
@@ -96,12 +101,14 @@ class Joon:
             self.parse_var(line)
         elif "님?" in line:
             self.parse_assign(line)
-        elif "자러가시는거에요" in line:
+        elif "언제까지 해보실래요?" in line:
             self.parse_loop(line)
         elif "님맥사세요" in line:
             self.parse_output(line)
-        elif "그냥여쭤^^보는거에요" in line:
+        elif "기술블로그 쓰셨나요?" in line:
             self.parse_condition(line)
+        elif "님맥언제사세요" in line:
+            self.parse_input(line)
     
     # 님이말씀해보세요
     def parse_var(self, line):
@@ -117,6 +124,9 @@ class Joon:
     # 님?
     def parse_assign(self, line):
         var = line.split("님? ")
+        for i in range(len(var)):
+            var[i] = var[i].strip()
+            var[i] = var[i].replace("\n", "")
         if var[0] == '':
             raise Exception("안타깝네요. 변수 어디갔습니까?")
         if var[0] not in  self.data:
@@ -126,15 +136,52 @@ class Joon:
         val = self.calculate_val(var[1])
         self.data[var[0]] += val
 
-    # 자러가시는거에요
+    # 언제까지 해보실래요? - 자러가시는거에요
     def parse_loop(self, line):
-        pass
+        var = line.split("언제까지 해보실래요? ")
+        val_calc = self.calculate_val(var[1])
+        loop_count = 1
+        loopline = ""
+        while "자러가시는거에요?" not in loopline:
+            loopline = self.lines[self.line + loop_count]
+            loop_count += 1
+        for i in range(val_calc):
+            for j in range(1, loop_count - 1):
+                self.check_type(self.lines[self.line + j])
+        self.line += loop_count - 1
 
     # 님맥사세요
     def parse_output(self, line):
         output = self.calculate_output(line)
         print(output)
 
-    # 그냥여쭤^^보는거에요
+    # 기술블로그 쓰셨나요? - 그냥여쭤^^보는거에요
     def parse_condition(self, line):
-        pass
+        var = line.split("기술블로그 쓰셨나요? ")
+        vars = var[1].split(" ")
+        val_calc1 = self.calculate_val(vars[0])
+        val_calc2 = self.calculate_val(vars[1])
+        loop_count = 1
+        loopline = ""
+        while "그냥여쭤^^보는거에요" not in loopline:
+            loopline = self.lines[self.line + loop_count]
+            loop_count += 1
+        if val_calc1 == val_calc2:
+            for j in range(1, loop_count - 1):
+                self.check_type(self.lines[self.line + j])
+        self.line += loop_count - 1
+
+
+    # 님맥언제사세요
+    def parse_input(self, line):
+        var = line.split("님맥언제사세요")
+        val = int(input())
+        if var[0] == '':
+            raise Exception("안타깝네요. 변수 어디갔습니까?")
+        if var[0] not in  self.data:
+            raise Exception("안타깝네요. 변수 선언 어디갔습니까?")
+        elif var[0] in self.operators:
+            raise Exception("너도 데앤할래? 변수와 연산자가 같을수 없어요.")
+        val_calc = self.calculate_val(val)
+        self.data[var[0]] += val_calc
+        
