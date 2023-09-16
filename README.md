@@ -3,7 +3,8 @@
 
 엄랭과 같은 brainf*ck언어들에서 영감을 얻었습니다.
 
-![image](https://github.com/printSANO/joonLang/assets/83595905/ea84aad1-16e0-4333-9914-68f4cb877b76)
+![Untitled2](https://github.com/printSANO/joonLang/assets/83595905/6f6225c2-5ebb-4bec-84f2-b3587957bac7)
+
 "하시면 어떻게든 됩니다." 를 언어 모토로 삼고 있습니다. 그것이 팀준이니까.
 
 # 참고 어록
