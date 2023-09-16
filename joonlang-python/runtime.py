@@ -143,7 +143,10 @@ class Joon:
         loop_count = 1
         loopline = ""
         while "자러가시는거에요?" not in loopline:
-            loopline = self.lines[self.line + loop_count]
+            try:
+                loopline = self.lines[self.line + loop_count]
+            except:
+                raise("안타깝네요. 자러가시는거에요? 가 없습니다!")
             loop_count += 1
         for i in range(val_calc):
             for j in range(1, loop_count - 1):
@@ -164,7 +167,10 @@ class Joon:
         loop_count = 1
         loopline = ""
         while "그냥여쭤^^보는거에요" not in loopline:
-            loopline = self.lines[self.line + loop_count]
+            try:
+                loopline = self.lines[self.line + loop_count]
+            except:
+                raise("안타깝네요. 그냥여쭤^^보는거에요 가 없습니다!")
             loop_count += 1
         if val_calc1 == val_calc2:
             for j in range(1, loop_count - 1):
@@ -175,7 +181,7 @@ class Joon:
     # 님맥언제사세요
     def parse_input(self, line):
         var = line.split("님맥언제사세요")
-        val = int(input())
+        val = input()
         if var[0] == '':
             raise Exception("안타깝네요. 변수 어디갔습니까?")
         if var[0] not in  self.data:
