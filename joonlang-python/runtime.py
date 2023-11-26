@@ -17,6 +17,7 @@ class Joon:
                 val, message = self.validate_joon_code(lines)
                 if val:
                     while self.line < len(lines):
+                        print(self.data)
                         line = lines[self.line]
                         l = line.strip()
                         if l != self.start_marker and l != self.end_marker and l != '' and not l.startswith('#'):
