@@ -1,0 +1,24 @@
+{
+  "name": "yourpublisher.joon-lang-extension",
+  "displayName": "Joon Lang Extension",
+  "version": "0.0.1",
+  "description": "Syntax highlighting for Joon language.",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "contributes": {
+    "grammars": [
+      {
+        "language": "joon",
+        "scopeName": "source.joon",
+        "path": "./syntaxes/joon.tmLanguage.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:joon-lang"
+  ],  
+  "devDependencies": {
+    "typescript": "^4.5.0"
+  }
+}

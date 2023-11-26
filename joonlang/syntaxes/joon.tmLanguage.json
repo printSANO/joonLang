@@ -1,0 +1,71 @@
+{
+  "scopeName": "source.joon",
+  "patterns": [
+    {
+      "name": "meta.joon",
+      "begin": "하시면 어떻게든 됩니다.",
+      "end": "끝내는 것도 자유입니다.",
+      "patterns": [
+        {
+          "name": "variable.declaration.joon",
+          "match": "\"[^\"]+님이말씀해보세요\""
+        },
+        {
+          "name": "operator.joon",
+          "match": "네\\?"
+        },
+        {
+          "name": "operator.joon",
+          "match": "에\\?"
+        },
+        {
+          "name": "operator.joon",
+          "begin": "워터밤",
+          "end": "네\\?\\s*네\\?"
+        },
+        {
+          "name": "operator.joon",
+          "match": "님\\?"
+        },
+        {
+          "name": "input.joon",
+          "match": "\"님맥언제사세요\""
+        },
+        {
+          "name": "loop.joon",
+          "begin": "언제까지 해보실래요?\\s*네\\?\\s*",
+          "end": "자러가시는거에요?",
+          "patterns": [
+            {
+              "name": "variable.declaration.joon",
+              "match": "\"[^\"]+님이말씀해보세요\""
+            }
+          ]
+        },
+        {
+          "name": "conditional.joon",
+          "begin": "기술블로그 쓰셨나요?\\s*",
+          "end": "그냥여쭤^^보는거에요",
+          "patterns": [
+            {
+              "name": "variable.joon",
+              "match": "\"[^\"]+님\""
+            },
+            {
+              "name": "operator.joon",
+              "match": "네\\?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "print.joon",
+      "match": "\"[^\"]+님맥언제사세요\""
+    },
+    {
+      "name": "print_ascii.joon",
+      "match": "\"[^\"]+님맥언제사세요!\""
+    }
+  ]
+}

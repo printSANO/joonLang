@@ -1,0 +1,25 @@
+{
+  "name": "joon",
+  "displayName": "joon",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "joon",
+      "aliases": ["joon"],
+      "extensions": [".joon"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "joon",
+      "scopeName": "source.joon",
+      "path": "./syntaxes/joon.tmLanguage.json"
+    }]
+  }
+}
